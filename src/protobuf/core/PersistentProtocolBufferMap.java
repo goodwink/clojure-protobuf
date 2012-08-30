@@ -105,12 +105,28 @@ public class PersistentProtocolBufferMap extends APersistentMap implements IObj 
 
       @Override
       public Object clojureName(String name) {
-        return Keyword.intern(name.replaceAll("_", "-").toLowerCase());
+        return Keyword.intern(name.replaceAll("_", "-"));
       }
 
       @Override
       public String toString() {
         return "[convert underscores]";
+      }
+    };
+    public static final NamingStrategy convertUnderscoresAndCase = new NamingStrategy() {
+      @Override
+      public String protoName(Object name) {
+        return nameStr(name).replaceAll("-", "_").toUpperCase();
+      }
+
+      @Override
+      public Object clojureName(String name) {
+        return Keyword.intern(name.replaceAll("_", "-").toLowerCase());
+      }
+
+      @Override
+      public String toString() {
+        return "[convert underscores and case]";
       }
     };
 
